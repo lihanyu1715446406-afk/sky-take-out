@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.EmployeeMapper">
+    <!-- id：对应Mapper接口的方法名；resultType：返回的实体类 -->
+    <select id="pageQuery" resultType="com.sky.entity.Employee">
+        select * from employee <!-- 1. 主查询语句 -->
+        <where>                <!-- 2. 动态条件标签 -->
+            <!-- 3. 判空：如果前端传了name，就拼接模糊查询
+             前端传了姓名 → 加上 and name like ...
+             前端没传姓名 → 这条条件直接消失，查询所有员工-->
+            <if test="name!=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 </mapper>
