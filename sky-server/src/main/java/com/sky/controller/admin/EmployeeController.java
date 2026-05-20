@@ -84,7 +84,7 @@ public class EmployeeController {
         log.info("新增员工:{}",employeeDTO);
         System.out.println("当前线程的id："+Thread.currentThread().getId());
         employeeService.save(employeeDTO);
-        return null;
+        return Result.success();
     }
 
     @GetMapping("/page")
@@ -94,6 +94,34 @@ public class EmployeeController {
         log.info("员工分页查询，参数为：{}",employeePageQueryDTO);
         PageResult pageResult=employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    //启用禁用员工账号
+    //要实现的功能并非查询，所以result不用加<>表示泛型
+    @PostMapping("/status/{status}")//请求方式为post，后面跟文档中的请求路径
+    @ApiOperation("启用禁用员工账号")//声明
+    //status为路径参数，要加@PathVariable注解
+    public Result startOrStop(@PathVariable Integer status,Long id){
+        log.info("启用禁用员工账号:{},{}",status,id);//记录日志
+        employeeService.startOrStop(status,id);//service层的实现
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")//传入路径参数
+    @ApiOperation("根据id查询员工信息")
+    //根据员工id查询员工信息,是查询类，返回泛型
+    public Result<Employee> getById(@PathVariable Long id){
+        Employee employee=employeeService.getById(id);
+        return Result.success(employee);//根据查询到的员工返回
+    }
+
+    //编辑员工信息
+    @PutMapping//为更新操作，加put注解
+    @ApiOperation("编辑员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO){
+        log.info("编辑员工信息：{}",employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();//不是泛型，就不用传参数进去了
     }
 
 }

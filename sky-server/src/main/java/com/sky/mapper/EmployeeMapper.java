@@ -27,4 +27,12 @@ public interface EmployeeMapper {
 
     //分页查询，要编写一条sql
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    //根据主键动态修改属性，alt回车去到映射文件里写比较方便
+    void update(Employee employee);
+
+    //根据id查询员工信息
+    //在select注解里面正常写sql语句就行了
+    @Select("select * from employee where id = #{id}")
+    Employee getById(Long id);
 }

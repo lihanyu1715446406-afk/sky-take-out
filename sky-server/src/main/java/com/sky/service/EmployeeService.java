@@ -8,6 +8,7 @@ import com.sky.result.PageResult;
 
 public interface EmployeeService {
 
+
     /**
      * 员工登录
      * @param employeeLoginDTO
@@ -21,4 +22,14 @@ public interface EmployeeService {
     void save(EmployeeDTO employeeDTO);
 
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    //启用禁用员工账号
+    void startOrStop(Integer status, Long id);
+    //接下来去impl实现类中实现这个方法
+
+    //根据id查询员工信息
+    Employee getById(Long id);
+
+    //编辑员工信息
+    void update(EmployeeDTO employeeDTO);
 }

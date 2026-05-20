@@ -103,4 +103,37 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(total,records);
     }
 
+    //启用禁用员工账号，本质为根据id更改status字段
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        //update employee set status =? where id = ?
+        //接着要在mapper中书写sql语句，为了通用性，写成动态sql。并且参数为对象更好
+        Employee employee =new Employee();
+        employee.setStatus(status);
+        employee.setId(id);
+
+        employeeMapper.update(employee);//爆红，需要alt回车去扩展该方法
+    }
+
+
+    public Employee getById(Long id) {
+        //需要调用持久层
+        Employee employee=employeeMapper.getById(id);
+        employee.setPassword("****");//设置返回给前端的密码，增强安全性
+        return employee;
+    }
+
+
+    public void update(EmployeeDTO employeeDTO) {
+        //employeeMapper.update()
+        //我们之前已经写过update方法，但是要的是employee对象
+        //进行对象属性拷贝，从DTO拷贝到employee上面去
+        Employee employee=new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee);
+        //设置更新时间和更新人
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        //设置好之后调用Mapper的update方法修改相关属性
+        employeeMapper.update(employee);
+    }
 }
