@@ -43,7 +43,7 @@ public class AutoFillAspect {
         }
         Object entity = args[0];
         //准备为字段赋值的数据
-        LocalDate now = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         Long currentId = BaseContext.getCurrentId();
         //根据当前不同的操作类型，为对应的属性通过反射来获取
         if (operationType == OperationType.INSERT) {
