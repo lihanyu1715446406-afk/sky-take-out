@@ -31,7 +31,7 @@ public interface DishMapper {
     @Select("select * from dish where id = #{id}")
     Dish getById(Long id);
 
-    //根据主键删除菜品数据
+    //根据主键删除菜品
     @Delete("delete from dish where id = #{id}")
     void deleteById(Long id);
 }
