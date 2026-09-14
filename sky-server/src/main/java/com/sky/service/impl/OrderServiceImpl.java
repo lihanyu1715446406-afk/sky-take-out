@@ -56,21 +56,21 @@ public class OrderServiceImpl implements OrderService {
             //抛出业务异常
             throw new ShoppingCartBusinessException(MessageConstant.SHOPPING_CART_IS_NULL);
         }
+        List<OrderDetail> orderDetailList = new ArrayList<>();
+        //向订单明细表插入n条
         //向订单表插入一条数据
         Orders orders=new Orders();
         BeanUtils.copyProperties(ordersSubmitDTO,orders);
         orders.setOrderTime(LocalDateTime.now());
-        orders.setPayStatus(Orders.UN_PAID);
-        orders.setStatus(Orders.PENDING_PAYMENT);
+        orders.setCheckoutTime(LocalDateTime.now());
+        orders.setPayStatus(Orders.PAID);
+        orders.setStatus(Orders.TO_BE_CONFIRMED);
         orders.setNumber(String.valueOf(System.currentTimeMillis()));
         orders.setPhone(addressBook.getPhone());
         orders.setConsignee(addressBook.getConsignee());
         orders.setUserId(userId);
-
         orderMapper.insert(orders);
 
-        List<OrderDetail> orderDetailList = new ArrayList<>();
-        //向订单明细表插入n条数据
         for(ShoppingCart cart:shoppingCartList){
             OrderDetail orderDetail=new OrderDetail();//订单明细
             BeanUtils.copyProperties(cart,orderDetail);
