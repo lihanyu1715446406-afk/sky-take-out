@@ -22,6 +22,9 @@ public interface ShoppingCartMapper {
              "values(#{name},#{image},#{userId},#{dishId},#{setmealId},#{dishFlavor},#{number},#{amount},#{createTime})")
     void insert(ShoppingCart shoppingCart);
 
+    //批量插入购物车数据
+    void insertBatch(List<ShoppingCart> shoppingCartList);
+
     //根据用户id删除购物车数据
     @Delete("delete from shopping_cart where user_id=#{userId}")
     void deleteByUserId(Long userId);

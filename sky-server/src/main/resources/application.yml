@@ -52,4 +52,10 @@ sky:
   wechat:
     appid: ${sky.wechat.appid}
     secret: ${sky.wechat.secret}
+  shop:
+    # 商家门店地址（用于配送范围校验的起点）
+    address: 北京市海淀区上地十街10号
+  baidu:
+    # 百度地图开放平台的 AK（服务端应用），留空则跳过配送范围校验
+    ak: ""
 
