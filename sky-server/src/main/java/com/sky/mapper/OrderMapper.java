@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -40,4 +41,6 @@ public interface OrderMapper {
     //根据主键动态修改订单字段
     void update(Orders orders);
 
+    //根据动态条件统计营业额数据
+    Double sumByMap(Map map);
 }
