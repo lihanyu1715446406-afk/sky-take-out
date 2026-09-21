@@ -136,9 +136,9 @@ public class ReportServiceImpl implements ReportService {
         }
 
         //计算时间区间内的订单总数量
-        Integer totalOrderCount = orderCountList.stream().reduce(Integer::sum).get();
+        Integer totalOrderCount = orderCountList.stream().reduce(0,Integer::sum);
         //计算时间区间内的有效订单数量
-        Integer validOrderCount = validOrderCountList.stream().reduce(Integer::sum).get();
+        Integer validOrderCount = validOrderCountList.stream().reduce(0,Integer::sum);
         //计算订单完成率
 
         Double orderCompletionRate = 0.0;
@@ -164,7 +164,7 @@ public class ReportServiceImpl implements ReportService {
         map.put("status",status);
 
         Integer count = orderMapper.countByMap(map);
-        return count;
+        return count == null ? 0 : count;
     }
 
     //统计指定时间内的销量排名前10
